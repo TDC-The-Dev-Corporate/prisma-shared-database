@@ -6,7 +6,8 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "prisma"
+    "prisma",
+    "src"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
