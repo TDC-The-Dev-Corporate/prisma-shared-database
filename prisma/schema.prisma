@@ -1,5 +1,5 @@
 datasource db {
-  provider = "mysql"
+  provider = "postgres"
   url      = env("DATABASE_URL")
 }
 
@@ -7,8 +7,54 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model User {
-  id    Int    @id @default(autoincrement())
-  name  String
-  email String @unique
+model Users_new {
+  user_id          Int      @id @default(autoincrement())
+  username         String   @unique
+  email            String   @unique
+  discord          String?  @unique
+  twitter          String?  @unique
+  show_discord     Boolean? @default(false)
+  show_twitter     Boolean? @default(false)
+  web              String?
+  profile_image    String?
+  package_id       Int      @default(1)
+  status           Int      @default(1)
+  remarks          String?
+  password         String?
+  discord_email    String?  @unique
+  bio              String?
+  location         String?
+  linkedin         String?
+  instagram        String?
+  reddit           String?
+  medium           String?
+  figma            String?
+  github           String?
+  telegram         String?
+  youtube          String?
+  referral_code    String?  @unique
+  xp               Int      @default(0)
+  shard            Int      @default(0)
+  amp              Int      @default(0)
+  micro_amp        Int      @default(0)
+  locked_shard     Int      @default(0)
+  locked_amp       Int      @default(0)
+  locked_micro_amp Int      @default(0)
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+
+  Activity Activity[]
+}
+
+model Activity {
+  activity_id Int      @id @default(autoincrement())
+  user_id     Int
+  activity    String
+  type        String   @default("default")
+  points      Int
+  image       String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  user Users_new @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
 }
